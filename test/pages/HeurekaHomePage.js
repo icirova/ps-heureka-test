@@ -1,6 +1,10 @@
 class HeurekaHomePage {
 
     //selektory
+    get cookieAcceptButton() {
+        return $('#didomi-notice-agree-button');
+      }
+
     get searchInput() {
         return $('.c-search__input');
     }
@@ -14,8 +18,14 @@ class HeurekaHomePage {
         await browser.url('https://www.heureka.cz');
     }
 
+    async acceptCookies() {
+        if (await this.cookieAcceptButton.isDisplayed()) {
+            await this.cookieAcceptButton.waitForClickable({ timeout: 5000 });
+            await this.cookieAcceptButton.click();
+        }
+    }
     async searchFor(productName) {
-        await this.searchInput.setValue(productName.toLowerCase());
+        await this.searchInput.setValue(productName);
         await this.searchButton.click();
     }
 
